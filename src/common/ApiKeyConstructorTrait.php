@@ -2,7 +2,7 @@
 
 namespace Ispahbod\SmsPanel\common;
 
-trait apiKeyConstructor
+trait apiKeyConstructorTrait
 {
     private string $apiKey;
 

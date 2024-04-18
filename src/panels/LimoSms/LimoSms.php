@@ -2,11 +2,11 @@
 
 namespace Ispahbod\SmsPanel\panels\LimoSms;
 
-use Ispahbod\SmsPanel\common\apiKeyConstructor;
+use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
 
 class LimoSms
 {
-    use apiKeyConstructor;
+    use apiKeyConstructorTrait;
 
     public function pattern(): Pattern
     {

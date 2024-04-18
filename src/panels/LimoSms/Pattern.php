@@ -3,11 +3,11 @@
 namespace Ispahbod\SmsPanel\panels\LimoSms;
 
 use Ispahbod\HttpManager\HttpManager;
-use Ispahbod\SmsPanel\common\apiKeyConstructor;
+use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
 
 class Pattern
 {
-    use apiKeyConstructor;
+    use apiKeyConstructorTrait;
 
     private string $id = '';
     private string $sender = '';
@@ -42,7 +42,10 @@ class Pattern
     {
         $http = new HttpManager();
         $url = 'https://api.limosms.com/api/sendpatternmessage';
-        return $http->executeSingleRequest('post', $url, [
+        $request = $http->executeSingleRequest('post', $url, [
+            'headers' => [
+                'ApiKey' => $this->apiKey
+            ],
             'json' => [
                 'OtpId' => $this->id,
                 'ReplaceToken' => $this->data,
@@ -50,6 +53,9 @@ class Pattern
                 'MobileNumber' => $this->receiver,
             ],
             'verify' => false
-        ])->getContent();
+        ]);
+        $array = $request->getContentArray();
+        $data = empty($array) ? [] : $array;
+        return new Response(response: $data, statusCode: $request->getStatusCode(), error: $request->getBody());
     }
 }

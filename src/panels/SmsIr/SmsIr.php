@@ -2,9 +2,9 @@
 
 namespace Ispahbod\SmsPanel\panels\SmsIr;
 
-use Ispahbod\SmsPanel\common\apiKeyConstructor;
+use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
 
 class SmsIr
 {
-    use apiKeyConstructor;
+    use apiKeyConstructorTrait;
 }

@@ -2,10 +2,10 @@
 
 namespace Ispahbod\SmsPanel\panels\Mediana;
 
-use Ispahbod\SmsPanel\common\apiKeyConstructor;
+use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
 
 class Mediana
 {
-    use apiKeyConstructor;
+    use apiKeyConstructorTrait;
 
 }

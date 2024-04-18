@@ -2,9 +2,9 @@
 
 namespace Ispahbod\SmsPanel\panels\Melipayamak;
 
-use Ispahbod\SmsPanel\common\apiKeyConstructor;
+use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
 
 class Melipayamak
 {
-    use apiKeyConstructor;
+    use apiKeyConstructorTrait;
 }
