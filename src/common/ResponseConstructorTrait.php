@@ -2,7 +2,7 @@
 
 namespace Ispahbod\SmsPanel\common;
 
-trait responseConstructorTrait
+trait ResponseConstructorTrait
 {
     private array $response;
     private array $statusCode;

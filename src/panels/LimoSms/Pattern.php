@@ -3,6 +3,7 @@
 namespace Ispahbod\SmsPanel\panels\LimoSms;
 
 use Ispahbod\HttpManager\HttpManager;
+use Ispahbod\PhoneManager\PhoneManager;
 use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
 
 class Pattern
@@ -34,12 +35,19 @@ class Pattern
 
     public function setReceiver(string $receiver): self
     {
-        $this->receiver = $receiver;
+        if (PhoneManager::isValidIranianNumber($receiver)){
+            $this->receiver = PhoneManager::formatNumberLocal($receiver);
+        }
         return $this;
     }
 
-    public function execute()
+    public function execute(): ResponseHandler
     {
+        if (empty($this->data) || empty($this->sender) || empty($this->receiver)) {
+            $errorMessage = 'Data, sender, or receiver cannot be empty.';
+            return new ResponseHandler(response: [], statusCode: 400, error: $errorMessage);
+        }
+
         $http = new HttpManager();
         $url = 'https://api.limosms.com/api/sendpatternmessage';
         $request = $http->executeSingleRequest('post', $url, [
@@ -56,6 +64,6 @@ class Pattern
         ]);
         $array = $request->getContentArray();
         $data = empty($array) ? [] : $array;
-        return new Response(response: $data, statusCode: $request->getStatusCode(), error: $request->getBody());
+        return new ResponseHandler(response: $data, statusCode: $request->getStatusCode(), error: $request->getBody());
     }
 }
