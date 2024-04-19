@@ -1,10 +1,11 @@
 <?php
 
-namespace Ispahbod\SmsPanel\panels\LimoSms;
+namespace Ispahbod\SmsPanel\panels\SmsIr;
 
 use Ispahbod\HttpManager\HttpManager;
 use Ispahbod\PhoneManager\PhoneManager;
-use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
+use Ispahbod\SmsPanel\common\ApiKeyConstructorTrait;
+use Ispahbod\SmsPanel\panels\LimoSms\ResponseHandler;
 
 class Pattern
 {
@@ -27,12 +28,6 @@ class Pattern
         return $this;
     }
 
-    public function setSender(string $sender): self
-    {
-        $this->sender = $sender;
-        return $this;
-    }
-
     public function setReceiver(string $receiver): self
     {
         if (PhoneManager::isValidIranianNumber($receiver)) {
@@ -43,24 +38,27 @@ class Pattern
 
     public function execute(): ResponseHandler
     {
-        if (empty($this->data) || empty($this->sender) || empty($this->receiver)) {
-            $errorMessage = 'Data, sender, or receiver cannot be empty.';
+        if (empty($this->data) ||  empty($this->receiver)) {
+            $errorMessage = 'Data or receiver cannot be empty.';
             return new ResponseHandler(response: [], statusCode: 400, error: $errorMessage);
         }
 
         $http = new HttpManager();
-        $url = 'https://api.limosms.com/api/sendpatternmessage';
+        $url = 'https://api.sms.ir/v1/send/verify';
         $request = $http->executeSingleRequest('post', $url, [
             'headers' => [
-                'ApiKey' => $this->apiKey
+                'ACCEPT' => 'application/json',
+                'X-API-KEY' => $this->apiKey,
             ],
             'json' => [
-                'OtpId' => $this->id,
-                'ReplaceToken' => array_map(static function ($value) {
-                    return $value;
-                }, $this->data),
-                'SenderNumber' => $this->sender,
-                'MobileNumber' => $this->receiver,
+                'TemplateId' => $this->id,
+                'Parameters' => array_walk($this->data, static function ($value, $key) {
+                    return [
+                        'Name' => $key,
+                        'Value' => $value,
+                    ];
+                }),
+                'Mobile' => $this->receiver,
             ],
             'verify' => false
         ]);
