@@ -2,6 +2,7 @@
 
 namespace Ispahbod\SmsPanel\panels\SmsIr;
 
+use GuzzleHttp\RequestOptions;
 use Ispahbod\HttpManager\HttpManager;
 use Ispahbod\PhoneManager\PhoneManager;
 use Ispahbod\SmsPanel\common\ApiKeyConstructorTrait;
@@ -47,18 +48,19 @@ class Pattern
         $url = 'https://api.sms.ir/v1/send/verify';
         $request = $http->executeSingleRequest('post', $url, [
             'headers' => [
-                'ACCEPT' => 'application/json',
-                'X-API-KEY' => $this->apiKey,
+                'Content-Type' => 'application/json',
+                'Accept' => 'text/plain',
+                'x-api-key' => $this->apiKey,
             ],
             'json' => [
-                'TemplateId' => $this->id,
-                'Parameters' => array_walk($this->data, static function ($value, $key) {
+                'mobile' => $this->receiver,
+                'templateId' => $this->id,
+                'parameters' => array_map(function ($value, $key) {
                     return [
-                        'Name' => $key,
-                        'Value' => $value,
+                        'name' => $key,
+                        'value' => $value,
                     ];
-                }),
-                'Mobile' => $this->receiver,
+                }, $this->data, array_keys($this->data)),
             ],
             'verify' => false
         ]);
