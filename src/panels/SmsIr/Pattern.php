@@ -2,11 +2,9 @@
 
 namespace Ispahbod\SmsPanel\panels\SmsIr;
 
-use GuzzleHttp\RequestOptions;
 use Ispahbod\HttpManager\HttpManager;
 use Ispahbod\PhoneManager\PhoneManager;
 use Ispahbod\SmsPanel\common\ApiKeyConstructorTrait;
-use Ispahbod\SmsPanel\panels\LimoSms\ResponseHandler;
 
 class Pattern
 {
