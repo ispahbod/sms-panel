@@ -56,9 +56,7 @@ class Pattern
             ],
             'json' => [
                 'OtpId' => $this->id,
-                'ReplaceToken' => array_map(static function ($value) {
-                    return $value;
-                }, $this->data),
+                'ReplaceToken' => array_values($this->data),
                 'SenderNumber' => $this->sender,
                 'MobileNumber' => $this->receiver,
             ],
