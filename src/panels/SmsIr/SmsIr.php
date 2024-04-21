@@ -2,11 +2,11 @@
 
 namespace Ispahbod\SmsPanel\panels\SmsIr;
 
-use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
+use Ispahbod\SmsPanel\common\ApiKeyConstructorTrait;
 
 class SmsIr
 {
-    use apiKeyConstructorTrait;
+    use ApiKeyConstructorTrait;
 
     public function pattern(): Pattern
     {
