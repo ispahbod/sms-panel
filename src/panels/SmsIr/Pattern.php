@@ -8,7 +8,7 @@ use Ispahbod\SmsPanel\common\ApiKeyConstructorTrait;
 
 class Pattern
 {
-    use apiKeyConstructorTrait;
+    use ApiKeyConstructorTrait;
 
     private string $id = '';
     private string $sender = '';

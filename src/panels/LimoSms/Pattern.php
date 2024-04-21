@@ -4,11 +4,11 @@ namespace Ispahbod\SmsPanel\panels\LimoSms;
 
 use Ispahbod\HttpManager\HttpManager;
 use Ispahbod\PhoneManager\PhoneManager;
-use Ispahbod\SmsPanel\common\apiKeyConstructorTrait;
+use Ispahbod\SmsPanel\common\ApiKeyConstructorTrait;
 
 class Pattern
 {
-    use apiKeyConstructorTrait;
+    use ApiKeyConstructorTrait;
 
     private string $id = '';
     private string $sender = '';
