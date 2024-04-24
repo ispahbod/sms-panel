@@ -19,8 +19,8 @@
         "php": "^8.2",
         "illuminate/support": ">=6",
         "ispahbod/api-response-builder": "^0.1.0",
-        "ispahbod/http-manager": "*",
-        "ispahbod/phone-manager": "*"
+        "ispahbod/http-manager": "^0.4.0",
+        "ispahbod/phone-manager": "^0.6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8"
